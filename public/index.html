@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GoDaddy Domain Info Fetcher</title>
+  <style>
+    * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      h1 {
+        text-align: center;
+        color: #333333;
+      }
+      
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #cccccc;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #0071e3;
+        color: #ffffff;
+        cursor: pointer;
+        border-radius: 0 4px 4px 0;
+        transition: background-color 0.3s ease;
+      }
+      
+      button:hover {
+        background-color: #005bb5;
+      }
+      
+      #result {
+        margin-top: 20px;
+      }
+      
+      #result h2 {
+        color: #0071e3;
+      }
+      
+      #result p {
+        color: #555555;
+      }
+      
+      #result ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+      
+      .error {
+        color: red;
+      }
+
+      p{
+        text-wrap: wrap;
+        width: 20vw;
+      }
+      
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Domain Information</h1>
+    <form id="domain-form" action='/app'  method="POST">
+      <input type="text" id="domain-input" placeholder="Enter Domain Name (e.g., example.com)" required>
+      <button class="btn">Fetch Info</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  
+  <script>
+    document.querySelector("#domain-form").addEventListener('submit',async (event)=>{
+      event.preventDefault();
+      const query = document.getElementById('domain-input').value
+
+      const result = await fetch('/app',{method : 'POST',headers : {'Content-Type' : 'application/json'},body : JSON.stringify({query})})
+      const a = await result.json()
+      console.log(a)
+
+      document.getElementById('result').innerHTML = `<p> ${a} </p>`
+      
+    })
+
+  </script>
+</body>
+</html>
